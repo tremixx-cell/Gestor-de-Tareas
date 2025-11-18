@@ -8,23 +8,23 @@ Fecha: 18/11/25
 ---
 
 ## 1. Resumen del proyecto
-Aplicación de escritorio en Python para crear, visualizar, editar, eliminar y organizar tareas personales o académicas. Soporta campos: **título**, **descripción**, **categoría**, **fecha límite**, **estado** y **prioridad**. Incluye filtros, ordenamientos y un módulo de priorización inteligente implementado con el **Strategy Pattern**. Interfaz gráfica con **Tkinter**. Persistencia de datos compatible con **JSON**, **CSV** y **SQLite**.
+Aplicación de escritorio en Python para crear, visualizar, editar, eliminar y organizar tareas personales o académicas. Soporta campos: "título", "descripción"", "categoría", "fecha límite", "estado" y "prioridad". Incluye filtros, ordenamientos y un módulo de priorización inteligente implementado con el Strategy Pattern. Interfaz gráfica con Tkinter. Persistencia de datos compatible con JSON.
 
 ---
 
-## 2. Requisitos funcionales (resumidos)
+## 2. Requisitos funcionales 
 - CRUD de tareas.
 - Filtros por categoría, estado, prioridad y fecha límite.
 - Ordenamiento por varios criterios.
 - Módulo de priorización seleccionable (estrategias: por fecha, por tipo/categoría, manual).
-- Persistencia en JSON, CSV o SQLite (configurable).
+- Persistencia en JSON
 - Interfaz gráfica con Tkinter.
 - Tests unitarios para la lógica de negocio.
 - Documentación: casos de uso, diagramas UML, explicación de decisiones y README técnico.
 
 ---
 
-## 3. Estructura propuesta del repositorio
+## 3. Estructura del repositorio
 ```
 task_manager/
 ├─ main.py                 
@@ -86,10 +86,10 @@ pytest -q
 
 ---
 
-## 6. Casos de uso (resumen)
+## 6. Casos de uso 
 1. Crear tarea: El usuario ingresa título, descripción, categoría, fecha límite y selecciona prioridad o deja que la estrategia asignadora la calcule.
 2. Eliminar tarea Borrar tarea.
-3. Persistencia y carga: Guardar y cargar tareas desde JSON/CSV/SQLite.
+3. Persistencia y carga: Guardar y cargar tareas desde JSON
 
 ---
 
@@ -166,17 +166,17 @@ sequenceDiagram
 
 ---
 
-## 9. Decisiones de diseño y justificación
-- Separación de responsabilidades: Models, persistence, GUI y lógica de negocio (controllers) están desacoplados para facilitar pruebas y mantenimiento.
+9. Decisiones de diseño y justificación
+- Separación de responsabilidades: constants está desacoplado para facilitar pruebas y mantenimiento.
 - Inyección de dependencias en controller: Task_Manager recibe la implementación de storage y la estrategia de prioridad; esto permite cambiar persistencia o estrategia sin modificar la lógica.
 - Strategy Pattern:Elegido para encapsular algoritmos de priorización y permitir selección en tiempo de ejecución sin condicionales extensos.
-- Persistencia flexible:** Implementaciones JSON/CSV/SQLite con interfaz común `IStorage` para permitir añadir otras fuentes en el futuro (p. ej. APIs).
+- Persistencia flexible: Implementaciones JSON con interfaz común `IStorage` para permitir añadir otras fuentes en el futuro (p. ej. APIs).
 - Tkinter: Suficiente para proyectos académicos, multiplataforma y disponible en la stdlib.
 
 
 ---
 
-## 10. Contratos/Esquema de persistencia (ejemplo JSON)
+ 10. Contratos/Esquema de persistencia 
 Ejemplo de un archivo `tasks_sample.json`:
 ```json
 [
@@ -205,7 +205,3 @@ Ejemplo de un archivo `tasks_sample.json`:
 
 
 ---
-
-
-
-**Licencia:** MIT (sugerida).
