@@ -1,9 +1,9 @@
 
 # Gestor de Tareas — Proyecto (README)
 
-**Alumno(es): Isaac Gomez, Carlos Gomez y Simon Serrano
-**Curso: Diseño de Software
-**Fecha: 18/11/25
+Alumno(es): Isaac Gomez, Carlos Gomez y Simon Serrano
+Curso: Diseño de Software
+Fecha: 18/11/25
 
 ---
 
@@ -27,21 +27,21 @@ Aplicación de escritorio en Python para crear, visualizar, editar, eliminar y o
 ## 3. Estructura propuesta del repositorio
 ```
 task_manager/
-├─ app.py                 # Inicializador de la aplicación (GUI)
-├─ README.md              # Este archivo
-├─ requirements.txt       # Dependencias (si aplica)
+├─ main.py                 
+├─ README.md              
+├─ requirements.txt       
 ├─ src/
-│  ├─ models/
-│  │  └─ task.py
+│ 
+─ task.py
 │  ├─ persistence/
-│  │  ├─ storage_json.py
-│  │  ├─ storage_csv.py
-│  │  └─ storage_sqlite.py
+│  │  ├─ data.json.py
+│  │  
+│  │  
 │  ├─ prioritize/
-│  │  ├─ strategy.py
-│  │  ├─ by_deadline.py
-│  │  ├─ by_category.py
-│  │  └─ manual.py
+│  │- strategy.py
+│  │  
+│  │
+│  │  
 │  ├─ controllers/
 │  │  └─ task_controller.py
 │  └─ gui/
@@ -87,12 +87,9 @@ pytest -q
 ---
 
 ## 6. Casos de uso (resumen)
-1. **Crear tarea:** El usuario ingresa título, descripción, categoría, fecha límite y selecciona prioridad o deja que la estrategia asignadora la calcule.
-2. **Editar tarea:** Modificar cualquier campo de una tarea existente.
-3. **Eliminar tarea:** Borrar tarea.
-4. **Visualizar lista:** Mostrar tabla/lista con tareas, con filtros y ordenamientos.
-5. **Cambiar estrategia de prioridad:** Seleccionar entre estrategias disponibles (por fecha, por categoría, manual).
-6. **Persistencia y carga:** Guardar y cargar tareas desde JSON/CSV/SQLite.
+1. Crear tarea: El usuario ingresa título, descripción, categoría, fecha límite y selecciona prioridad o deja que la estrategia asignadora la calcule.
+2. Eliminar tarea Borrar tarea.
+3. Persistencia y carga: Guardar y cargar tareas desde JSON/CSV/SQLite.
 
 ---
 
@@ -173,91 +170,45 @@ sequenceDiagram
 ---
 
 ## 9. Decisiones de diseño y justificación
-- **Separación de responsabilidades:** Models, persistence, GUI y lógica de negocio (controllers) están desacoplados para facilitar pruebas y mantenimiento.
-- **Inyección de dependencias en controller:** TaskController recibe la implementación de storage y la estrategia de prioridad; esto permite cambiar persistencia o estrategia sin modificar la lógica.
-- **Strategy Pattern:** Elegido para encapsular algoritmos de priorización y permitir selección en tiempo de ejecución sin condicionales extensos.
-- **Persistencia flexible:** Implementaciones JSON/CSV/SQLite con interfaz común `IStorage` para permitir añadir otras fuentes en el futuro (p. ej. APIs).
-- **Tkinter:** Suficiente para proyectos académicos, multiplataforma y disponible en la stdlib.
+- Separación de responsabilidades: Models, persistence, GUI y lógica de negocio (controllers) están desacoplados para facilitar pruebas y mantenimiento.
+- Inyección de dependencias en controller: Task_Manager recibe la implementación de storage y la estrategia de prioridad; esto permite cambiar persistencia o estrategia sin modificar la lógica.
+- Strategy Pattern:Elegido para encapsular algoritmos de priorización y permitir selección en tiempo de ejecución sin condicionales extensos.
+- Persistencia flexible:** Implementaciones JSON/CSV/SQLite con interfaz común `IStorage` para permitir añadir otras fuentes en el futuro (p. ej. APIs).
+- Tkinter: Suficiente para proyectos académicos, multiplataforma y disponible en la stdlib.
+
 
 ---
 
-## 10. Estrategias de priorización (resumen)
-- **ByDeadline:** Asigna mayor prioridad a tareas con fecha límite más cercana. (p. ej. prioridad = inverso de días restantes).
-- **ByCategory:** Prioriza según categoría (configurable, p. ej. "Exámenes" > "Tareas" > "Lectura").
-- **Manual:** El usuario asigna prioridad explícitamente.
-
----
-
-## 11. Contratos/Esquema de persistencia (ejemplo JSON)
+## 10. Contratos/Esquema de persistencia (ejemplo JSON)
 Ejemplo de un archivo `tasks_sample.json`:
 ```json
 [
   {
-    "id": 1,
-    "title": "Preparar informe",
-    "description": "Informe final del proyecto",
-    "category": "Trabajo",
-    "due_date": "2025-12-01T23:59:00",
+    "titulo": "Preparar informe",
+    "descripción": "Informe final del proyecto",
+    "categoria": "Trabajo",
+    "fecha_limite": "2025-12-01T23:59:00",
     "status": "pendiente",
-    "priority": 5
+    "prioridad": 3
   },
   {
-    "id": 2,
-    "title": "Leer capítulo 4",
-    "description": "Capítulo sobre patrones de diseño",
-    "category": "Estudio",
-    "due_date": "2025-11-25T18:00:00",
-    "status": "en progreso",
-    "priority": 3
+    "titulo": "Leer capítulo 4",
+    "description": "Leer la celestina capitulo 4",
+    "categoria": "Estudio",
+    "Fecha_limite": "2025-11-25T18:00:00",
+    "Estado": "en progreso",
+    "Prioridad": 3
   }
 ]
 ```
 
 ---
 
-## 12. Pruebas unitarias (sugerencia)
-- Ubicar tests en `tests/` usando `pytest`.
-- Tests recomendados:
-  - Crear/editar/borrar tarea en `TaskController`.
-  - Asignación de prioridad según cada `PriorityStrategy`.
-  - Carga/guardado en cada `IStorage`.
-Ejecutar:
-```bash
-pytest -q
-```
+
+
 
 ---
 
-## 13. Ejemplos de uso rápido (línea de comandos del controlador)
-```python
-from src.controllers.task_controller import TaskController
-from src.persistence.storage_json import JSONStorage
-from src.prioritize.by_deadline import ByDeadline
 
-storage = JSONStorage("data/tasks.json")
-controller = TaskController(storage, ByDeadline())
-
-controller.create_task(title="Tarea A", description="...", category="Estudio", due_date="2025-11-20T12:00:00")
-tasks = controller.get_tasks(sort_by="priority")
-```
-
----
-
-## 14. Recomendaciones para entrega y evaluación
-- Incluir un documento `DOCUMENTACION.pdf` con los diagramas exportados (opcional).
-- Comentarios en código y docstrings en funciones/clases.
-- Pruebas que cubran al menos un 70% de la lógica de negocio.
-- Incluir ejemplos de datos en `sample_data/`.
-
----
-
-## 15. Notas finales
-Este README está creado para cubrir los requisitos académicos solicitados. Puedes pedirme que genere además:
-- Código base (esqueleto del proyecto).
-- Tests unitarios ejemplo.
-- Archivos de persistencia con datos de muestra.
-- Documentos PDF con diagramas generados.
-
----
 
 **Licencia:** MIT (sugerida).
