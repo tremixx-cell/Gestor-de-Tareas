@@ -1,7 +1,7 @@
 
 # Gestor de Tareas — Proyecto (README)
 
-Alumno(es): Isaac Gomez, Carlos Gomez y Simon Serrano
+Alumnos: Isaac Gomez, Carlos Gomez y Simon Serrano
 Curso: Diseño de Software
 Fecha: 18/11/25
 
