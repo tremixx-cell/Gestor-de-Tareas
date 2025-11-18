@@ -115,8 +115,7 @@ classDiagram
     }
 
     class JSONStorage
-    class CSVStorage
-    class SQLiteStorage
+
 
     class PriorityStrategy {
         <<interface>>
@@ -140,8 +139,6 @@ classDiagram
     TaskController --> PriorityStrategy
     TaskController --> Task
     IStorage <|-- JSONStorage
-    IStorage <|-- CSVStorage
-    IStorage <|-- SQLiteStorage
     PriorityStrategy <|-- ByDeadline
     PriorityStrategy <|-- ByCategory
     PriorityStrategy <|-- Manual
